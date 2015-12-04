@@ -16,7 +16,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = DB::table('user')->get();
+
+        foreach($users as $user)
+            echo $user;
     }
 
     /**

@@ -15,6 +15,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/user.index', function () {
-   return "Whatsapp";
-});
+Route::get('/user', 'UserController@index');
