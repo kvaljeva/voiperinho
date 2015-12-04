@@ -43,9 +43,16 @@ class UserController extends Controller
         $password = $request->input('password');
         $email = $request->input('email');
 
-        DB::table('user')->insert(
+        $querySucceded = DB::table('user')->insert(
           ['username' => $username, 'password' => $password, 'emailAddress' => $email]
         );
+
+        if ($querySucceded) {
+            echo Response::json(array('status' => 200, 'message' => 'OK'), 200);
+        }
+        else {
+            echo Response::json(array('status' => 400, 'message' => 'ERR'), 400);
+        }
     }
 
     /**
