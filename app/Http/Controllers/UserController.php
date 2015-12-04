@@ -43,7 +43,7 @@ class UserController extends Controller
         $password = $request->input('password');
         $email = $request->input('email');
 
-        DB::table('user')->inser(
+        DB::table('user')->insert(
           ['username' => $username, 'password' => $password, 'emailAddress' => $email]
         );
     }
