@@ -89,7 +89,7 @@ class UserController extends Controller
 
     public function getUser($username, $password)
     {
-        $user = DB::table('user')->get()->where('username', $username)->where('password', $password)->first();
+        $user = DB::table('user')->get()->where(['username' => $username, 'password' => $password])->first();
 
         if ($user != null) {
             echo json(array('status' => 200, 'message' => 'OK'), 200);
