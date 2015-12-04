@@ -54,10 +54,10 @@ return [
 
         'mysql' => [
             'driver'    => 'mysql',
-            'host'      => env('DB_HOST', 'localhost'),
-            'database'  => env('DB_DATABASE', 'voiperinho'),
-            'username'  => env('DB_USERNAME', 'java'),
-            'password'  => env('DB_PASSWORD', 'javapass_word'),
+            'host'      => 'localhost',
+            'database'  => 'voiperinho',
+            'username'  => 'java',
+            'password'  => 'javapass_word',
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',
