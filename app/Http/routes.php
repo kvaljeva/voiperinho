@@ -16,3 +16,4 @@ Route::get('/', function () {
 });
 
 Route::post('/user', 'UserController@getUser');
+Route::post('/user/insert', 'UserController@store');

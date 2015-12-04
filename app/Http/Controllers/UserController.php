@@ -39,7 +39,13 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $username = $request->input('username');
+        $password = $request->input('password');
+        $email = $request->input('email');
+
+        DB::table('user')->inser(
+          ['username' => $username, 'password' => $password, 'emailAddress' => $email]
+        );
     }
 
     /**
@@ -87,6 +93,12 @@ class UserController extends Controller
         //
     }
 
+    /**
+     * Checks whether the user with the passed username and password exists.
+     *
+     * @param Request $request
+     * @return Http response alongside json
+     */
     public function getUser(Request $request)
     {
         $username = $request->input('username');
