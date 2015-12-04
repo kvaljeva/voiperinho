@@ -20,7 +20,7 @@ class UserController extends Controller
         $users = DB::table('user')->get();
 
         foreach($users as $user)
-            echo $user;
+            echo $user->username;
     }
 
     /**
