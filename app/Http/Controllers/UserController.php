@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use DB;
+use Response;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -17,10 +18,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = DB::table('user')->get();
-
-        foreach($users as $user)
-            echo $user->username;
+        //
     }
 
     /**
@@ -36,7 +34,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -47,7 +45,7 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -58,7 +56,7 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -69,8 +67,8 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -81,11 +79,23 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         //
+    }
+
+    public function getUser($username, $password)
+    {
+        $user = DB::table('user')->get()->where('username', $username)->where('password', $password)->first();
+
+        if ($user != null) {
+            echo json(array('status' => 200, 'message' => 'OK'), 200);
+        }
+        else {
+            echo json(array('status' => 400, 'message' => 'OK'), 400);
+        }
     }
 }
