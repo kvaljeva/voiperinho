@@ -113,7 +113,7 @@ class UserController extends Controller
         $user = DB::table('user')->where(['username' => $username, 'password' => $password])->first();
 
         if ($user != null) {
-            echo Response::json(array('status' => 200, 'message' => 'OK'), 200);
+            echo Response::json(array('status' => 200, 'message' => json_encode($user)), 200);
         }
         else {
             echo Response::json(array('status' => 400, 'message' => 'ERR'), 400);
