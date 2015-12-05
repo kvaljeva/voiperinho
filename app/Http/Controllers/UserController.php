@@ -114,10 +114,16 @@ class UserController extends Controller
         $user = User::where(['username' => $username, 'password' => $password])->first();
 
         if ($user != null) {
-            echo Response::json(array('status' => 200, 'message' => json_encode($user)), 200);
+
+            $returnValue['status'] = 200;
+            $returnValue['message'] = $user;
+
+            return Response::json($returnValue, 200);
         }
-        else {
-            echo Response::json(array('status' => 400, 'message' => 'ERR'), 400);
-        }
+
+        $returnValue['status'] = 400;
+        $returnValue['message'] = 'User does not exist.';
+
+        return Response::json($returnValue, 400);
     }
 }
