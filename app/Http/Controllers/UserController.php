@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use DB;
 use Response;
+use App\User;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
