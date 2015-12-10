@@ -43,9 +43,10 @@ class UserController extends Controller
         $username = $request->input('username');
         $password = $request->input('password');
         $email = $request->input('email');
+        $avatar = $request->input('avatar');
 
         $querySucceeded = DB::table('user')->insert(
-          ['username' => $username, 'password' => $password, 'emailAddress' => $email]
+          ['username' => $username, 'password' => $password, 'email_address' => $email, 'avatar' => $avatar]
         );
 
         if ($querySucceeded) {
