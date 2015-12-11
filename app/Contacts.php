@@ -9,7 +9,7 @@ class Contacts extends Model
     use SoftDeletes;
 
     protected $table = 'contacts';
-    protected $timestamps = true;
+    public $timestamps = true;
 
     /**
      * The attributes that are mass assignable.
