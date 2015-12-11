@@ -24,4 +24,4 @@ Route::post('/requests/insert', 'ContactRequestController@store');
 
 Route::post('/contacts', 'ContactsController@index');
 Route::post('/contacts/insert', 'ContactsController@store');
-Route::post('/contacts/delete/{$id}', 'ContactsController@destroy');
+Route::post('/contacts/delete/{id}', 'ContactsController@destroy');
