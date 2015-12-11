@@ -9,9 +9,9 @@ use App\Http\Controllers\Controller;
 
 use DB;
 use Response;
-Use App\ContactRequest;
+Use App\ContactRequestCo;
 
-class RequestController extends Controller
+class ContactRequestController extends Controller
 {
     /**
      * Display a listing of the resource.

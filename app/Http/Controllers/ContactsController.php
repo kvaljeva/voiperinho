@@ -11,7 +11,6 @@ use DB;
 use Response;
 use App\Contacts;
 
-
 class ContactsController extends Controller
 {
     /**
