@@ -18,9 +18,9 @@ Route::get('/', function () {
 Route::post('/user', 'UserController@getUser');
 Route::post('/user/insert', 'UserController@store');
 
-Route::post('/requests', 'App\Http\Controllers\ContactRequestController@index');
-Route::post('/requests/update', 'App\Http\Controllers\ContactRequestController@update');
-Route::post('/requests/insert', 'App\Http\Controllers\ContactRequestController@store');
+Route::post('/requests', 'ContactRequestController@index');
+Route::post('/requests/update', 'ContactRequestController@update');
+Route::post('/requests/insert', 'ContactRequestController@store');
 
 Route::post('/contacts', 'ContactsController@index');
 Route::post('/contacts/insert', 'ContactsController@store');
