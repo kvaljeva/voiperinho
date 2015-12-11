@@ -9,10 +9,9 @@ use App\Http\Controllers\Controller;
 
 use DB;
 use Response;
-use App\Contacts;
+Use App\ContactRequest;
 
-
-class ContactsController extends Controller
+class RequestController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,17 +20,17 @@ class ContactsController extends Controller
      */
     public function index()
     {
-        $contacts = Contacts::get();
+        $requests = Request::get();
 
-        if ($contacts != null) {
+        if ($requests != null) {
             $returnValue['status'] = 200;
-            $returnValue['message'] = $contacts;
+            $returnValue['message'] = $requests;
 
             return Response::json($returnValue, 200);
         }
 
         $returnValue['status'] = 400;
-        $returnValue['message'] = 'An error occurred while fetching contacts.';
+        $returnValue['message'] = 'An error occurred while fetching requests.';
 
         return Response::json($returnValue, 400);
     }
@@ -55,10 +54,12 @@ class ContactsController extends Controller
     public function store(Request $request)
     {
         $user = $request->input('userId');
-        $contact = $request->input('contactId');
+        $requester = $request->input('requesterId');
+        $state = false;
+        $request_text = $request->input('requestText');
 
-        $querySucceeded = Contacts::insert(
-            ['user_id' => $user, 'contact_id' => $contact]
+        $querySucceeded = Request::insert(
+            ['user_id' => $user, 'requester_id' => $requester, 'state' => $state, 'request_text' => $request_text]
         );
 
         if ($querySucceeded) {
@@ -69,7 +70,7 @@ class ContactsController extends Controller
         }
 
         $returnValue['status'] = 400;
-        $returnValue['message'] = "An error occurred while adding a new contact.";
+        $returnValue['message'] = "An error occurred while creating the request.";
 
         return Response::json($returnValue, 400);
     }
@@ -105,7 +106,21 @@ class ContactsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $updateSucceeded = Requests::where('id', $id)->update(
+            array(['state', false])
+        );
+
+        if ($updateSucceeded) {
+            $returnValue['status'] = 200;
+            $returnValue['message'] = "OK";
+
+            return Response::json($returnValue, 200);
+        }
+
+        $returnValue['status'] = 400;
+        $returnValue['message'] = "An error occurred while trying to delete a request.";
+
+        return Response::json($returnValue, 400);
     }
 
     /**
@@ -116,28 +131,6 @@ class ContactsController extends Controller
      */
     public function destroy($id)
     {
-        $contact = Contacts::find($id);
-
-        if ($contact != null) {
-
-            $deleted = $contact->delete();
-
-            if ($deleted) {
-                $returnValue['status'] = 200;
-                $returnValue['message'] = "Contact was successfully deleted.";
-
-                return Response::json($returnValue, 200);
-            }
-
-            $returnValue['status'] = 400;
-            $returnValue['message'] = 'An error occurred while trying to delete the selected contact.';
-
-            return Response::json($returnValue, 400);
-        }
-
-        $returnValue['status'] = 404;
-        $returnValue['message'] = 'Contact not found.';
-
-        return Response::json($returnValue, 404);
+        //
     }
 }
