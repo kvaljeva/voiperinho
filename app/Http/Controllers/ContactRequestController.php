@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 
 use DB;
 use Response;
-Use App\ContactRequestCo;
+Use App\ContactRequest;
 
 class ContactRequestController extends Controller
 {
@@ -20,7 +20,7 @@ class ContactRequestController extends Controller
      */
     public function index()
     {
-        $requests = Request::get();
+        $requests = ContactRequest::get();
 
         if ($requests != null) {
             $returnValue['status'] = 200;
