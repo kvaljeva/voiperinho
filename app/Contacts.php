@@ -3,11 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletingTrait;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Contacts extends Model
 {
-    use SoftDeletingTrait;
+    use SoftDeletes;
 
     protected $table = 'contacts';
     public $timestamps = true;
