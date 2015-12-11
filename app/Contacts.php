@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Contacts extends Model
 {
-    use SoftDeletes;
+    use SoftDeletingTrait;
 
     protected $table = 'contacts';
     public $timestamps = true;
