@@ -57,7 +57,7 @@ class ContactRequestController extends Controller
         $state = false;
         $request_text = $request->input('requestText');
 
-        $querySucceeded = Request::insert(
+        $querySucceeded = ContactRequest::insert(
             ['user_id' => $user, 'requester_id' => $requester, 'state' => $state, 'request_text' => $request_text]
         );
 
@@ -105,7 +105,7 @@ class ContactRequestController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $updateSucceeded = Requests::where('id', $id)->update(
+        $updateSucceeded = ContactRequest::where('id', $id)->update(
             array(['state', false])
         );
 
