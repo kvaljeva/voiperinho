@@ -21,3 +21,7 @@ Route::post('/user/insert', 'UserController@store');
 Route::post('/requests', 'ContactRequestController@index');
 Route::post('/requests/update', 'ContactRequestController@update');
 Route::post('/requests/insert', 'ContactRequestController@store');
+
+Route::post('/contacts', 'ContactsController@index');
+Route::post('/contacts/insert', 'ContactsController@store');
+Route::post('/contacts/delete', 'ContactsController@destroy');
