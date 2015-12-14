@@ -17,11 +17,13 @@ Route::get('/', function () {
 
 Route::post('/user', 'UserController@getUser');
 Route::post('/user/insert', 'UserController@store');
+Route::get('/user/{id}/contacts', 'UserController@getContacts');
+Route::get('/user/{id}/requests', 'UserController@getContactRequests');
 
-Route::post('/requests', 'ContactRequestController@index');
+Route::get('/requests', 'ContactRequestController@index');
 Route::post('/requests/update', 'ContactRequestController@update');
 Route::post('/requests/insert', 'ContactRequestController@store');
 
-Route::post('/contacts', 'ContactsController@index');
-Route::post('/contacts/insert', 'ContactsController@store');
-Route::post('/contacts/delete/{id}', 'ContactsController@destroy');
+Route::get('/contacts', 'ContactController@index');
+Route::post('/contacts/insert', 'ContactController@store');
+Route::post('/contacts/delete/{id}', 'ContactController@destroy');

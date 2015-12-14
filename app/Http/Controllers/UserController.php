@@ -49,8 +49,8 @@ class UserController extends Controller
           ['username' => $username, 'password' => $password, 'email_address' => $email, 'avatar' => $avatar]
         );
 
-        if ($querySucceeded) {
-
+        if ($querySucceeded)
+        {
             $returnValue['status'] = 200;
             $returnValue['message'] = 'OK';
 
@@ -112,7 +112,7 @@ class UserController extends Controller
      * Checks whether the user with the passed username and password exists.
      *
      * @param Request $request
-     * @return Http response alongside json
+     * @return \Illuminate\Http\Response
      */
     public function getUser(Request $request)
     {
@@ -120,10 +120,62 @@ class UserController extends Controller
         $password = $request->input('password');
         $user = User::where(['username' => $username, 'password' => $password])->first();
 
-        if ($user != null) {
-
+        if ($user != null)
+        {
             $returnValue['status'] = 200;
             $returnValue['message'] = $user;
+
+            return Response::json($returnValue, 200);
+        }
+
+        $returnValue['status'] = 400;
+        $returnValue['message'] = 'User does not exist.';
+
+        return Response::json($returnValue, 400);
+    }
+
+    /**
+     * Selects all of the given users existing contacts.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getContacts($id)
+    {
+        $user = User::find($id);
+
+        if ($user != null)
+        {
+            $contacts = $user->contacts()->join('user', 'user.id', '=', 'contacts.contact_id')->get(['user.*']);
+
+            $returnValue['status'] = 200;
+            $returnValue['message'] = $contacts;
+
+            return Response::json($returnValue, 200);
+        }
+
+        $returnValue['status'] = 400;
+        $returnValue['message'] = 'User does not exist.';
+
+        return Response::json($returnValue, 400);
+    }
+
+    /**
+     * Selects all of the given users contact requests.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getContactRequests($id)
+    {
+        $user = User::find($id);
+
+        if ($user != null)
+        {
+            $contacts = $user->requests()->join('user', 'user.id', '=', 'requests.requester_id')->get(['user.*']);
+
+            $returnValue['status'] = 200;
+            $returnValue['message'] = $contacts;
 
             return Response::json($returnValue, 200);
         }

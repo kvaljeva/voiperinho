@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Contacts extends Model
+class Contact extends Model
 {
     use SoftDeletes;
 
@@ -19,4 +19,9 @@ class Contacts extends Model
      */
     protected $fillable = ['user_id', 'contact_id'];
     protected $dates = ['deleted_at'];
+
+    public function user()
+    {
+        return $this->belongsTo('User');
+    }
 }

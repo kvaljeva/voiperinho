@@ -21,7 +21,8 @@ class ContactRequestController extends Controller
     {
         $requests = ContactRequest::get();
 
-        if ($requests != null) {
+        if ($requests != null)
+        {
             $returnValue['status'] = 200;
             $returnValue['message'] = $requests;
 
@@ -61,7 +62,8 @@ class ContactRequestController extends Controller
             ['user_id' => $user, 'requester_id' => $requester, 'state' => $state, 'request_text' => $request_text]
         );
 
-        if ($querySucceeded) {
+        if ($querySucceeded)
+        {
             $returnValue['status'] = 200;
             $returnValue['message'] = "OK";
 
@@ -109,7 +111,8 @@ class ContactRequestController extends Controller
             array(['state', false])
         );
 
-        if ($updateSucceeded) {
+        if ($updateSucceeded)
+        {
             $returnValue['status'] = 200;
             $returnValue['message'] = "OK";
 

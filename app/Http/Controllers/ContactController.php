@@ -8,9 +8,9 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use DB;
 use Response;
-use App\Contacts;
+use App\Contact;
 
-class ContactsController extends Controller
+class ContactController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,9 +19,10 @@ class ContactsController extends Controller
      */
     public function index()
     {
-        $contacts = Contacts::get();
+        $contacts = Contact::get();
 
-        if ($contacts != null) {
+        if ($contacts != null)
+        {
             $returnValue['status'] = 200;
             $returnValue['message'] = $contacts;
 
@@ -55,11 +56,12 @@ class ContactsController extends Controller
         $user = $request->input('userId');
         $contact = $request->input('contactId');
 
-        $querySucceeded = Contacts::insert(
+        $querySucceeded = Contact::insert(
             ['user_id' => $user, 'contact_id' => $contact]
         );
 
-        if ($querySucceeded) {
+        if ($querySucceeded)
+        {
             $returnValue['status'] = 200;
             $returnValue['message'] = "OK";
 
@@ -114,13 +116,14 @@ class ContactsController extends Controller
      */
     public function destroy($id)
     {
-        $contact = Contacts::find($id);
+        $contact = Contact::find($id);
 
-        if ($contact != null) {
-
+        if ($contact != null)
+        {
             $deleted = $contact->delete();
 
-            if ($deleted) {
+            if ($deleted)
+            {
                 $returnValue['status'] = 200;
                 $returnValue['message'] = "Contact was successfully deleted.";
 
