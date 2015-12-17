@@ -204,12 +204,16 @@ class UserController extends Controller
 
         if ($user != null)
         {
-            $contacts = $user->requests()
-                ->join('user', 'user.id', '=', 'requests.requester_id')
+            $requests = $user->requests()
                 ->get();
 
+            $contacts = $user->requests()
+                ->join('user', 'user.id', '=', 'requests.requester_id')
+                ->get(['user.id', 'username', 'email_address', 'avatar']);
+
             $returnValue['status'] = 200;
-            $returnValue['message'] = $contacts;
+            $returnValue['message']['request'] = $requests;
+            $returnValue['message']['requester'] = $contacts;
 
             return Response::json($returnValue, 200);
         }
