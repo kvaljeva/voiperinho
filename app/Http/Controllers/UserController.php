@@ -206,7 +206,7 @@ class UserController extends Controller
         {
             $contacts = $user->requests()
                 ->join('user', 'user.id', '=', 'requests.requester_id')
-                ->get(['username', 'email_address', 'avatar']);
+                ->get();
 
             $returnValue['status'] = 200;
             $returnValue['message'] = $contacts;
