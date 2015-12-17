@@ -211,9 +211,13 @@ class UserController extends Controller
                 ->join('user', 'user.id', '=', 'requests.requester_id')
                 ->get(['user.id', 'username', 'email_address', 'avatar']);
 
+            for ($i = 0; $i < count($requests); $i++)
+            {
+                $requests[$i]['requester'] = $contacts[$i];
+            }
+
             $returnValue['status'] = 200;
-            $returnValue['message']['request'] = $requests;
-            $returnValue['message']['requester'] = $contacts;
+            $returnValue['message']= $requests;
 
             return Response::json($returnValue, 200);
         }
