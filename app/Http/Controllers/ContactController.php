@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Carbon\Carbon;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use DB;
@@ -30,7 +31,7 @@ class ContactController extends Controller
         }
 
         $returnValue['status'] = 400;
-        $returnValue['message'] = 'An error occurred while fetching contacts.';
+        $returnValue['error_message'] = 'An error occurred while fetching contacts.';
 
         return Response::json($returnValue, 400);
     }
@@ -55,10 +56,14 @@ class ContactController extends Controller
     {
         $user = $request->input('userId');
         $contact = $request->input('contactId');
+        $timestamp = Carbon::now();
 
-        $querySucceeded = Contact::insert(
-            ['user_id' => $user, 'contact_id' => $contact]
+        $data = array(
+            array('user_id' => $user, 'created_at' => $timestamp->toDateTimeString(), 'contact_id' => $contact),
+            array('user_id' => $contact, 'created_at' => $timestamp->toDateTimeString(), 'contact_id' => $user)
         );
+
+        $querySucceeded = Contact::insert($data);
 
         if ($querySucceeded)
         {
@@ -69,7 +74,7 @@ class ContactController extends Controller
         }
 
         $returnValue['status'] = 400;
-        $returnValue['message'] = "An error occurred while adding a new contact.";
+        $returnValue['error_message'] = "An error occurred while adding a new contact.";
 
         return Response::json($returnValue, 400);
     }
@@ -131,13 +136,13 @@ class ContactController extends Controller
             }
 
             $returnValue['status'] = 400;
-            $returnValue['message'] = 'An error occurred while trying to delete the selected contact.';
+            $returnValue['error_message'] = 'An error occurred while trying to delete the selected contact.';
 
             return Response::json($returnValue, 400);
         }
 
         $returnValue['status'] = 404;
-        $returnValue['message'] = 'Contact not found.';
+        $returnValue['error_message'] = 'Contact not found.';
 
         return Response::json($returnValue, 404);
     }

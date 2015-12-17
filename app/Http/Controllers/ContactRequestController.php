@@ -30,7 +30,7 @@ class ContactRequestController extends Controller
         }
 
         $returnValue['status'] = 400;
-        $returnValue['message'] = 'An error occurred while fetching requests.';
+        $returnValue['error_message'] = 'An error occurred while fetching requests.';
 
         return Response::json($returnValue, 400);
     }
@@ -58,6 +58,9 @@ class ContactRequestController extends Controller
         $state = false;
         $request_text = $request->input('requestText');
 
+        if (empty($request_text))
+            $request_text = "Hi there! I would like to add you on Voiperinho. Care to chat? :)";
+
         $querySucceeded = ContactRequest::insert(
             ['user_id' => $user, 'requester_id' => $requester, 'state' => $state, 'request_text' => $request_text]
         );
@@ -65,13 +68,13 @@ class ContactRequestController extends Controller
         if ($querySucceeded)
         {
             $returnValue['status'] = 200;
-            $returnValue['message'] = "OK";
+            $returnValue['message'] = 'OK';
 
             return Response::json($returnValue, 200);
         }
 
         $returnValue['status'] = 400;
-        $returnValue['message'] = "An error occurred while creating the request.";
+        $returnValue['error_message'] = "An error occurred while creating the request.";
 
         return Response::json($returnValue, 400);
     }
@@ -95,18 +98,6 @@ class ContactRequestController extends Controller
      */
     public function edit($id)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
         $updateSucceeded = ContactRequest::where('id', $id)->update(
             array(['state', false])
         );
@@ -120,9 +111,21 @@ class ContactRequestController extends Controller
         }
 
         $returnValue['status'] = 400;
-        $returnValue['message'] = "An error occurred while trying to delete a request.";
+        $returnValue['error_message'] = "An error occurred while trying to delete a request.";
 
         return Response::json($returnValue, 400);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
     }
 
     /**

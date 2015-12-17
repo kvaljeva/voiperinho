@@ -58,7 +58,7 @@ class UserController extends Controller
         }
 
         $returnValue['status'] = 400;
-        $returnValue['message'] = 'ERR';
+        $returnValue['error_message'] = 'An error occurred while trying to store new user.';
 
         return Response::json($returnValue, 400);
     }
@@ -129,9 +129,39 @@ class UserController extends Controller
         }
 
         $returnValue['status'] = 400;
-        $returnValue['message'] = 'User does not exist.';
+        $returnValue['error_message'] = 'User does not exist.';
 
         return Response::json($returnValue, 400);
+    }
+
+    /**
+     * Gets all of the users that are not set as the requester's contacts.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getAvailableUsers(Request $request)
+    {
+        $requesterId = $request->input('id');
+        $username = $request->input('username');
+
+        $users = User::leftJoin('contacts', 'contacts.contact_id', '=', 'user.id')
+            ->where('user.id', '!=', $requesterId)
+            ->where('user.username', 'LIKE', '%'.$username.'%')
+            ->get(['user.*']);
+
+        if ($users != null)
+        {
+            $returnValue['status'] = 200;
+            $returnValue['message'] = $users;
+
+            return Response::json($returnValue, 200);
+        }
+
+        $returnValue['status'] = 405;
+        $returnValue['error_message'] = 'No users are registered with given or similar nickname.';
+
+        return Response::json($returnValue, 405);
     }
 
     /**
@@ -146,7 +176,9 @@ class UserController extends Controller
 
         if ($user != null)
         {
-            $contacts = $user->contacts()->join('user', 'user.id', '=', 'contacts.contact_id')->get(['user.*']);
+            $contacts = $user->contacts()
+                ->join('user', 'user.id', '=', 'contacts.contact_id')
+                ->get(['username', 'email_address', 'avatar']);
 
             $returnValue['status'] = 200;
             $returnValue['message'] = $contacts;
@@ -155,7 +187,7 @@ class UserController extends Controller
         }
 
         $returnValue['status'] = 400;
-        $returnValue['message'] = 'User does not exist.';
+        $returnValue['error_message'] = 'User does not exist.';
 
         return Response::json($returnValue, 400);
     }
@@ -172,7 +204,9 @@ class UserController extends Controller
 
         if ($user != null)
         {
-            $contacts = $user->requests()->join('user', 'user.id', '=', 'requests.requester_id')->get(['user.*']);
+            $contacts = $user->requests()
+                ->join('user', 'user.id', '=', 'requests.requester_id')
+                ->get(['username', 'email_address', 'avatar']);
 
             $returnValue['status'] = 200;
             $returnValue['message'] = $contacts;
@@ -181,7 +215,7 @@ class UserController extends Controller
         }
 
         $returnValue['status'] = 400;
-        $returnValue['message'] = 'User does not exist.';
+        $returnValue['error_message'] = 'User does not exist.';
 
         return Response::json($returnValue, 400);
     }

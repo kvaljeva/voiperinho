@@ -37,6 +37,7 @@ class User extends Model implements AuthenticatableContract,
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+    protected $visible = ['username', 'email_address', 'avatar'];
 
     public function contacts()
     {

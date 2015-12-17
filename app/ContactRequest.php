@@ -15,4 +15,9 @@ class ContactRequest extends Model
      * @var array
      */
     protected $fillable = ['user_id', 'requester_id', 'state', 'request_text'];
+
+    public function user()
+    {
+        return $this->belongsTo('User');
+    }
 }

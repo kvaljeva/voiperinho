@@ -16,12 +16,13 @@ Route::get('/', function () {
 });
 
 Route::post('/user', 'UserController@getUser');
+Route::post('/user/list', 'UserController@getAvailableUsers');
 Route::post('/user/insert', 'UserController@store');
 Route::get('/user/{id}/contacts', 'UserController@getContacts');
 Route::get('/user/{id}/requests', 'UserController@getContactRequests');
 
 Route::get('/requests', 'ContactRequestController@index');
-Route::post('/requests/update', 'ContactRequestController@update');
+Route::post('/requests/edit', 'ContactRequestController@edit');
 Route::post('/requests/insert', 'ContactRequestController@store');
 
 Route::get('/contacts', 'ContactController@index');
