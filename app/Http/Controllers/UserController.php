@@ -178,7 +178,7 @@ class UserController extends Controller
         {
             $contacts = $user->contacts()
                 ->join('user', 'user.id', '=', 'contacts.contact_id')
-                ->get(['username', 'email_address', 'avatar']);
+                ->get(['id', 'username', 'email_address', 'avatar']);
 
             $returnValue['status'] = 200;
             $returnValue['message'] = $contacts;
