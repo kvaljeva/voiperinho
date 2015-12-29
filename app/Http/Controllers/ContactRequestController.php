@@ -55,7 +55,7 @@ class ContactRequestController extends Controller
     {
         $user = $request->input('userId');
         $requester = $request->input('requesterId');
-        $state = false;
+        $state = true;
         $request_text = $request->input('requestText');
 
         if (empty($request_text))

@@ -22,7 +22,7 @@ Route::get('/user/{id}/contacts', 'UserController@getContacts');
 Route::get('/user/{id}/requests', 'UserController@getContactRequests');
 
 Route::get('/requests', 'ContactRequestController@index');
-Route::post('/requests/edit', 'ContactRequestController@edit');
+Route::post('/requests/edit/{id}', 'ContactRequestController@edit');
 Route::post('/requests/insert', 'ContactRequestController@store');
 
 Route::get('/contacts', 'ContactController@index');
