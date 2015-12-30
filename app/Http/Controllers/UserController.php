@@ -148,6 +148,7 @@ class UserController extends Controller
         $users = User::leftJoin('contacts', 'contacts.contact_id', '=', 'user.id')
             ->where('user.id', '!=', $requesterId)
             ->where('user.username', 'LIKE', '%'.$username.'%')
+	    ->distinct()
             ->get(['user.*']);
 
         if ($users != null)
