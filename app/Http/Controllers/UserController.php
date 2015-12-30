@@ -205,13 +205,15 @@ class UserController extends Controller
         if ($user != null)
         {
             $requests = $user->requests()
+		->where('state', '1')
                 ->get();
 
             $contacts = $user->requests()
                 ->join('user', 'user.id', '=', 'requests.requester_id')
+		->where('requests.state', '=', '1')
                 ->get(['user.id', 'username', 'email_address', 'avatar']);
 
-            for ($i = 0; $i < count($requests); $i++)
+            for ($i = 0; $i < count($contacts); $i++)
             {
                 $requests[$i]['requester'] = $contacts[$i];
             }

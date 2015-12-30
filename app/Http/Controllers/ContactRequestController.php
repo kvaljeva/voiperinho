@@ -93,13 +93,15 @@ class ContactRequestController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        $updateSucceeded = ContactRequest::where('id', $id)->update(
-            array(['state', false])
+	$request_id = $request->input('request_id');
+
+        $updateSucceeded = ContactRequest::where('id', $request_id)->update(
+            array('state' => false)
         );
 
         if ($updateSucceeded)
